@@ -9,17 +9,18 @@ const Composite = Matter.Composite;
 
 let engine;
 let world;
-var rope,fruit,ground;
+
+var fruit,ground;
+var rope,rope2,rope3;
 var fruit_con;
 var fruit_con_2;
 var fruit_con_3;
-var rope3;
+var button,button2,button3
 
 var bg_img;
 var food;
 var rabbit;
 
-var button,button2,button3;
 var bunny;
 var blink,eat,sad;
 var mute_btn;
@@ -31,6 +32,7 @@ var cut_sound;
 var sad_sound;
 var eating_sound;
 var air;
+
 var canW;
 var canH;
 
@@ -59,17 +61,23 @@ function preload()
 
 function setup() 
 {
+  //armazena o tipo de dispositivo móvel usado
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+  //se o tipo é mobile, ele pega o tamanho do display
+  //senão, ele pega o tamanho da aba do navegador
+  //usa createCanvas com os valores armazenados
   if(isMobile){
     canW = displayWidth; 
     canH = displayHeight; 
-    createCanvas(displayWidth+80, displayHeight);
+    createCanvas(canW+80,canH);
   } 
   else {
     canW = windowWidth; 
     canH = windowHeight; 
-    createCanvas(windowWidth, windowHeight);
+     createCanvas(canW,canH);
   }
+  
   frameRate(80);
 
   bk_song.play();
@@ -79,28 +87,21 @@ function setup()
   world = engine.world;
 
   //botão 1
-  button = createImg('cut_btn.png');
-  button.position(20,30);
-  button.size(50,50);
-  button.mouseClicked(drop);
+ 
 
    //botão 2
-   button2 = createImg('cut_btn.png');
-   button2.position(330,35);
-   button2.size(60,60);
-   button2.mouseClicked(drop2);
+   
  
    //botão 3
-   button3 = createImg('cut_btn.png');
-   button3.position(360,200);
-   button3.size(60,60);
-   button3.mouseClicked(drop3);
+   
 
+  //botão mute
   mute_btn = createImg('mute.png');
   mute_btn.position(450,20);
   mute_btn.size(50,50);
   mute_btn.mouseClicked(mute);
   
+  //3 cordas
   rope = new Rope(8,{x:40,y:30});
   rope2 = new Rope(7,{x:370,y:40});
   rope3 = new Rope(4,{x:400,y:225});
@@ -120,10 +121,16 @@ function setup()
   fruit = Bodies.circle(300,300,20);
   Matter.Composite.add(rope.body,fruit);
 
-  fruit_con = new Link(rope,fruit);
-  fruit_con_2 = new Link(rope2,fruit);
-  fruit_con_3 = new Link(rope3,fruit);
+  //conexão com a 1ª corda
 
+  
+  //conexão com a 2ª corda
+  
+  
+  //conexão com a 3ª corda
+  
+  
+  
   rectMode(CENTER);
   ellipseMode(RADIUS);
   textSize(50)
@@ -133,7 +140,7 @@ function setup()
 function draw() 
 {
   background(51);
-  image(bg_img,0,0,displayWidth+80,displayHeight);
+  image(bg_img,0,0,canW+80,canH);
 
   push();
   imageMode(CENTER);
@@ -168,6 +175,7 @@ function draw()
    
 }
 
+//função para cortar a 1ª corda
 function drop()
 {
   cut_sound.play();
@@ -176,21 +184,11 @@ function drop()
   fruit_con = null; 
 }
 
-function drop2()
-{
-  cut_sound.play();
-  rope2.break();
-  fruit_con_2.detach();
-  fruit_con_2 = null;
-}
+//função para cortar a 2ª corda
 
-function drop3()
-{
-  cut_sound.play();
-  rope3.break();
-  fruit_con_3.detach();
-  fruit_con_3 = null;
-}
+
+//função para cortar a 3ª corda
+
 
 
 function collide(body,sprite)
